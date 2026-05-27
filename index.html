@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table Lens</title>
+  <link rel="stylesheet" href="style.css" />
+  
+</head>
+<body>
+
+  <header class="topbar">
+    <div>
+      <h1>Table Lens</h1>
+      <p>Visualização interativa para exploração de dados multidimensionais</p>
+    </div>
+  </header>
+
+  <main class="app-container">
+
+    <!-- Seção 1: Carregar CSV -->
+    <section class="card">
+      <h2>Carregar CSV</h2>
+
+      <div class="upload-zone" id="drop-zone">
+        <p><strong>Clique ou arraste um CSV</strong></p>
+        <span>Separadores vírgula ou ponto e vírgula</span>
+      </div>
+
+      <input type="file" id="csv-input" accept=".csv" hidden />
+
+      <div class="action-bar">
+        <button class="btn" onclick="loadSampleData()">Dados de exemplo</button>
+      </div>
+
+      <div id="file-info" style="display:none; margin-top:12px; font-size:13px; color:#6b7280;"></div>
+    </section>
+
+    <!-- Seção 2: Pré-processamento -->
+    <section class="card" id="preprocess-panel" style="display:none;">
+      <h2>Pré-processamento</h2>
+
+      <div id="summary-row" class="pp-summary-row"></div>
+
+      <div id="index-select-wrap" class="pp-index-wrap"></div>
+
+      <div style="overflow-x:auto; margin-bottom:20px;">
+        <table class="pp-col-table">
+          <thead>
+            <tr>
+              <th>Coluna</th>
+              <th>Tipo</th>
+              <th>Valores faltantes</th>
+              <th>Imputação</th>
+              <th>Amostra</th>
+            </tr>
+          </thead>
+          <tbody id="col-tbody"></tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-bottom:10px;">Atributos para visualização</h3>
+      <div class="pp-chip-controls">
+        <button class="btn" onclick="toggleAllChips(true)">Todos</button>
+        <button class="btn" onclick="toggleAllChips(false)">Nenhum</button>
+        <button class="btn" onclick="selectChipsByType('numeric')">Só numéricos</button>
+        <button class="btn" onclick="selectChipsByType('categorical')">Só categóricos</button>
+        <span id="sel-count" class="pp-sel-count"></span>
+      </div>
+      <div id="attr-grid" class="pp-attr-grid"></div>
+
+      <div class="action-bar" style="margin-top:20px;">
+        <button class="btn btn-primary" onclick="finalize()">Gerar visualização →</button>
+      </div>
+    </section>
+
+    <!-- Seção 3: Table Lens -->
+    <section class="card">
+      <div class="toolbar">
+        <input type="text" id="search-input" placeholder="Buscar valores..." />
+        <select id="density-select">
+          <option value="compact">Compacto</option>
+          <option value="normal" selected>Normal</option>
+          <option value="expanded">Expandido</option>
+        </select>
+        <div class="vm-group" role="group" aria-label="Modo de viewport">
+          <button class="vm-btn vm-btn-active" data-mode="fit"        onclick="setViewMode('fit')"        title="Todos os dados cabem na tela — sem scroll">⊡ Ajustado</button>
+          <button class="vm-btn"               data-mode="scroll"     onclick="setViewMode('scroll')"     title="Scroll horizontal e vertical livres">⇔ Scroll</button>
+          <button class="vm-btn"               data-mode="fullscreen" onclick="setViewMode('fullscreen')" title="Ocupa a janela inteira">⛶ Tela cheia</button>
+        </div>
+      </div>
+
+      <div id="stats-panel"></div>
+      <div id="table-lens-container"></div>
+    </section>
+
+  </main>
+
+  <script src="preprocessar.js"></script>
+  <script src="tablelens.js"></script>
+
+</body>
+</html>
