@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Table Lens</title>
+  <title>Table Lens — Rao & Card (1994)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  
 </head>
 <body>
 
   <header class="topbar">
     <div>
       <h1>Table Lens</h1>
-      <p>Visualização interativa para exploração de dados multidimensionais</p>
+      <p>Focus+Context — Rao &amp; Card (1994) · barras quantitativas · swatches categóricos · DOI de bloco pulso</p>
     </div>
   </header>
 
@@ -21,19 +22,15 @@
     <!-- Seção 1: Carregar CSV -->
     <section class="card">
       <h2>Carregar CSV</h2>
-
       <div class="upload-zone" id="drop-zone">
         <p><strong>Clique ou arraste um CSV</strong></p>
         <span>Separadores vírgula ou ponto e vírgula</span>
       </div>
-
       <input type="file" id="csv-input" accept=".csv" hidden />
-
       <div class="action-bar">
         <button class="btn" onclick="loadSampleData()">Dados de exemplo</button>
       </div>
-
-      <div id="file-info" style="display:none; margin-top:12px; font-size:13px; color:#6b7280;"></div>
+      <div id="file-info" style="display:none; margin-top:10px; font-size:12px; color:#6b7280;"></div>
     </section>
 
     <!-- Seção 2: Pré-processamento -->
@@ -41,16 +38,15 @@
       <h2>Pré-processamento</h2>
 
       <div id="summary-row" class="pp-summary-row"></div>
-
       <div id="index-select-wrap" class="pp-index-wrap"></div>
 
-      <div style="overflow-x:auto; margin-bottom:20px;">
+      <div style="overflow-x:auto; margin-bottom:18px;">
         <table class="pp-col-table">
           <thead>
             <tr>
               <th>Coluna</th>
               <th>Tipo</th>
-              <th>Valores faltantes</th>
+              <th>Faltantes</th>
               <th>Imputação</th>
               <th>Amostra</th>
             </tr>
@@ -59,17 +55,17 @@
         </table>
       </div>
 
-      <h3 style="margin-bottom:10px;">Atributos para visualização</h3>
+      <h3 style="margin-bottom:8px;">Atributos para visualização</h3>
       <div class="pp-chip-controls">
         <button class="btn" onclick="toggleAllChips(true)">Todos</button>
         <button class="btn" onclick="toggleAllChips(false)">Nenhum</button>
-        <button class="btn" onclick="selectChipsByType('numeric')">Só numéricos</button>
-        <button class="btn" onclick="selectChipsByType('categorical')">Só categóricos</button>
+        <button class="btn" onclick="selectChipsByType('quantitative')">Só quantitativos</button>
+        <button class="btn" onclick="selectChipsByType('nominal')">Só nominais</button>
         <span id="sel-count" class="pp-sel-count"></span>
       </div>
       <div id="attr-grid" class="pp-attr-grid"></div>
 
-      <div class="action-bar" style="margin-top:20px;">
+      <div class="action-bar" style="margin-top:18px;">
         <button class="btn btn-primary" onclick="finalize()">Gerar visualização →</button>
       </div>
     </section>
@@ -78,15 +74,13 @@
     <section class="card">
       <div class="toolbar">
         <input type="text" id="search-input" placeholder="Buscar valores..." />
-        <select id="density-select">
-          <option value="compact">Compacto</option>
-          <option value="normal" selected>Normal</option>
-          <option value="expanded">Expandido</option>
-        </select>
         <div class="vm-group" role="group" aria-label="Modo de viewport">
-          <button class="vm-btn vm-btn-active" data-mode="fit"        onclick="setViewMode('fit')"        title="Todos os dados cabem na tela — sem scroll">⊡ Ajustado</button>
-          <button class="vm-btn"               data-mode="scroll"     onclick="setViewMode('scroll')"     title="Scroll horizontal e vertical livres">⇔ Scroll</button>
-          <button class="vm-btn"               data-mode="fullscreen" onclick="setViewMode('fullscreen')" title="Ocupa a janela inteira">⛶ Tela cheia</button>
+          <button class="vm-btn vm-btn-active" data-mode="fit"
+                  onclick="setViewMode('fit')"        title="Todos os dados cabem na tela">⊡ Ajustado</button>
+          <button class="vm-btn"               data-mode="scroll"
+                  onclick="setViewMode('scroll')"     title="Scroll livre">⇔ Scroll</button>
+          <button class="vm-btn"               data-mode="fullscreen"
+                  onclick="setViewMode('fullscreen')" title="Tela inteira — fisheye completo">⛶ Tela cheia</button>
         </div>
       </div>
 
